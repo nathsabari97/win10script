@@ -31,13 +31,7 @@ $tweaks = @(
 	### Chris Titus Tech Additions
 	"TitusRegistryTweaks",
 	"InstallTitusProgs", #REQUIRED FOR OTHER PROGRAM INSTALLS!
-	"Install7Zip",
-	"InstallNotepadplusplus",
-	"InstallIrfanview",
-	"InstallVLC",
-	"InstallAdobe",
-	"InstallBrave",
-	"ChangeDefaultApps",
+	
 
 	### Windows Apps
 	"DebloatAll",
@@ -243,63 +237,6 @@ Function InstallTitusProgs {
 	Start-BitsTransfer -Source "https://raw.githubusercontent.com/ChrisTitusTech/win10script/master/ooshutup10.cfg" -Destination ooshutup10.cfg
 	Start-BitsTransfer -Source "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe" -Destination OOSU10.exe
 	./OOSU10.exe ooshutup10.cfg /quiet
-}
-
-Function InstallAdobe {
-	Show-Choco-Menu -Title "Do you want to install Adobe Acrobat Reader?" -ChocoInstall "adobereader"
-}
-
-Function InstallJava {
-	Write-Output "Installing Java"
-	choco install jre8 -y
-}
-
-Function InstallBrave {
-	do
- {
-    Clear-Host
-    Write-Host "================ Do You Want to Install Brave Browser? ================"
-    Write-Host "Y: Press 'Y' to do this."
-    Write-Host "2: Press 'N' to skip this."
-	Write-Host "Q: Press 'Q' to stop the entire script."
-    $selection = Read-Host "Please make a selection"
-    switch ($selection)
-    {
-    'y' { 
-		Invoke-WebRequest -Uri "https://laptop-updates.brave.com/download/CHR253" -OutFile $env:USERPROFILE\Downloads\brave.exe
-		~/Downloads/brave.exe
-	}
-    'n' { Break }
-    'q' { Exit  }
-    }
- }
- until ($selection -match "y" -or $selection -match "n" -or $selection -match "q")
-	
-}
-Function Install7Zip {
-	Write-Output "Installing 7-Zip"
-	choco install 7zip -y
-}
-
-Function InstallNotepadplusplus {
-	Write-Output "Installing Notepad++"
-	choco install notepadplusplus -y
-}
-
-Function InstallVLC {
-	Write-Output "Installing VLC"
-	choco install vlc -y
-}
-
-Function InstallIrfanview {
-	Write-Output "Installing IrFanView Image Viewer"
-	choco install irfanview -y
-}
-
-Function ChangeDefaultApps {
-	Write-Output "Setting Default Programs - Notepad++ Brave VLC IrFanView"
-	Start-BitsTransfer -Source "https://raw.githubusercontent.com/ChrisTitusTech/win10script/master/MyDefaultAppAssociations.xml" -Destination $HOME\Desktop\MyDefaultAppAssociations.xml
-	dism /online /Import-DefaultAppAssociations:"%UserProfile%\Desktop\MyDefaultAppAssociations.xml"
 }
 
 ##########
